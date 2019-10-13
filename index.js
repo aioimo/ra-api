@@ -20,6 +20,7 @@ mongoose.connect(
 // Import Routes
 const authRoute = require('./routes/auth');
 const postRoute = require('./routes/posts');
+const gamesRoute = require('./routes/games');
 
 // Middleware
 app.use(express.json());
@@ -33,5 +34,6 @@ app.use(
 // Route Middleware
 app.use('/api/user', authRoute);
 app.use('/api/posts', postRoute);
+app.use('/api/games', gamesRoute);
 
 app.listen(PORT, () => console.log(`Server up and running on Port ${PORT}`));
