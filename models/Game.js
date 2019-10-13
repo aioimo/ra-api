@@ -21,9 +21,25 @@ const gameSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  host: {
+  player1: {
     type: mongoose.Schema.Types.ObjectId
-  }
+  },
+  player2: { type: mongoose.Schema.Types.ObjectId },
+  player3: { type: mongoose.Schema.Types.ObjectId },
+  player4: { type: mongoose.Schema.Types.ObjectId },
+  player5: { type: mongoose.Schema.Types.ObjectId }
 });
+
+gameSchema.query.includesPlayer = function(user) {
+  return this.where({
+    $or: [
+      { player1: user },
+      { player2: user },
+      { player3: user },
+      { player4: user },
+      { player5: user }
+    ]
+  });
+};
 
 module.exports = mongoose.model('Game', gameSchema);

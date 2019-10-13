@@ -3,10 +3,10 @@ const verify = require('./verifyToken');
 const Game = require('../models/Game');
 const router = express.Router();
 
-// GET all games
+// GET all games involving the active user
 router.get('/', verify, async (req, res) => {
   try {
-    games = await Game.find();
+    games = await Game.find().includesPlayer(req.user);
     res.json({ data: games });
   } catch (err) {
     res.status(400).json(err);
@@ -18,7 +18,7 @@ router.post('/', verify, async (req, res) => {
   const { numberPlayers } = req.body;
   const game = new Game({
     numberPlayers,
-    host: req.user
+    player1: req.user
   });
 
   try {
